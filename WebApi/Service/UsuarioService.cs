@@ -1,5 +1,5 @@
-﻿using Proyecto_CoderHouse.DataBase;
-using Proyecto_CoderHouse.Models;
+﻿using WebApi.database;
+using WebApi.models;
 
 namespace Proyecto_CoderHouse.Service
 {
@@ -7,7 +7,7 @@ namespace Proyecto_CoderHouse.Service
     {
         internal static List<Usuario> ObtenerTodosLosUsuarios()
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
                 List<Usuario> usuarios = context.Usuarios.ToList();
 
@@ -18,7 +18,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static Usuario ObtenerUsuarioPorId(int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
 
                Usuario? usuarioBuscado = context.Usuarios.Where(u=> u.Id==id).FirstOrDefault();
@@ -28,7 +28,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static bool AgregarUsuario(Usuario usuario)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
                 context.Usuarios.Add(usuario);
 
@@ -40,7 +40,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static bool ActualizarUsuarioPorId (Usuario usuario, int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
                 Usuario? usuarioBuscado = context.Usuarios.Where(u => u.Id == id).FirstOrDefault();
                 usuarioBuscado.Nombre= usuario.Nombre;
@@ -57,7 +57,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static void EliminarUsuario(int id)
         {
-            using (var context = new databasecontext())
+            using (var context = new coderhouse())
             {
                 var usuarioBuscado = context.Usuarios.Find(id);
 

@@ -1,5 +1,5 @@
-﻿using Proyecto_CoderHouse.DataBase;
-using Proyecto_CoderHouse.Models;
+﻿using WebApi.database;
+using WebApi.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,31 +10,31 @@ namespace Proyecto_CoderHouse.Service
 {
     internal class ProductoVendidoService
     {
-        internal static List<ProductoVendido> ListaProductosVendidos()
+        internal static List<ProductosVendido> ListaProductosVendidos()
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
-                List<ProductoVendido> productosVendidos = context.ProductoVendidos.ToList();
+                List<ProductosVendido> productosVendidos = context.ProductosVendidos.ToList();
 
                 return productosVendidos;
             }
         }
 
-        internal static ProductoVendido ObtenerProductoVendidoPorId(int id)
+        internal static ProductosVendido ObtenerProductoVendidoPorId(int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
 
-                ProductoVendido? productoVendido = context.ProductoVendidos.Where(p => p._Id == id).FirstOrDefault();
+                ProductosVendido? productoVendido = context.ProductosVendidos.Where(p => p.Id == id).FirstOrDefault();
                 return productoVendido;
             }
         }
 
-        internal static bool AgregarProductoVendido(ProductoVendido productoVendidos)
+        internal static bool AgregarProductoVendido(ProductosVendido productoVendidos)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
-                context.ProductoVendidos.Add(productoVendidos);
+                context.ProductosVendidos.Add(productoVendidos);
 
                 context.SaveChanges();
 
@@ -42,17 +42,17 @@ namespace Proyecto_CoderHouse.Service
             }
         }
 
-        internal static bool ActualizarProductoVendidoPorId(ProductoVendido productoVendidos, int id)
+        internal static bool ActualizarProductoVendidoPorId(ProductosVendido productoVendidos, int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
-                ProductoVendido? productoVendido = context.ProductoVendidos.Where(p => p._Id == id).FirstOrDefault();
+                ProductosVendido? productoVendido = context.ProductosVendidos.Where(p => p.Id == id).FirstOrDefault();
 
-                productoVendido.IdProducto = productoVendido.IdProducto;
+                productoVendido.IdProducto =productoVendido.IdProducto;
                 productoVendido.IdVenta = productoVendido.IdVenta;
                 productoVendido.Stock = productoVendido.Stock;
 
-                context.ProductoVendidos.Update(productoVendido);
+                context.ProductosVendidos.Update(productoVendido);
 
                 context.SaveChanges();
                 return true;
@@ -61,17 +61,17 @@ namespace Proyecto_CoderHouse.Service
 
         internal static void EliminarProductoVendido(int id)
         {
-            using (var context = new databasecontext())
+            using (var context = new coderhouse())
             {
 
-                var productoVendido = context.ProductoVendidos.Find(id);
+                var productoVendido = context.ProductosVendidos.Find(id);
 
                 if (productoVendido == null)
                 {
                     return;
                 }
 
-                context.ProductoVendidos.Remove(productoVendido);
+                context.ProductosVendidos.Remove(productoVendido);
 
                 context.SaveChanges();
             }

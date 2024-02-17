@@ -1,10 +1,11 @@
-﻿using Proyecto_CoderHouse.DataBase;
-using Proyecto_CoderHouse.Models;
+﻿using WebApi.database;
+using WebApi.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Proyecto_CoderHouse.Service
 {
@@ -12,7 +13,7 @@ namespace Proyecto_CoderHouse.Service
     {
         internal static List<Producto> ListaProductos()
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
                 List<Producto> productos = context.Productos.ToList();
 
@@ -23,7 +24,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static Producto ObtenerProductoPorId(int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
 
                 Producto? productoEncontrado = context.Productos.Where(p => p.Id == id).FirstOrDefault();
@@ -33,7 +34,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static bool AgregarProducto(Producto producto)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
                 context.Productos.Add(producto);
 
@@ -45,7 +46,7 @@ namespace Proyecto_CoderHouse.Service
 
         internal static bool ActualizarProductoPorId(Producto producto, int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
                 Producto? productoBuscado = context.Productos.Where(p => p.Id == id).FirstOrDefault();
                 productoBuscado.Descripcion = producto.Descripcion;
@@ -63,14 +64,14 @@ namespace Proyecto_CoderHouse.Service
 
         internal static void EliminarProducto(int idProducto)
         {
-            using (var context = new databasecontext())
+            using (var context = new coderhouse())
             {
                 var producto = context.Productos.Find(idProducto);
 
                 // Eliminar las ventas relacionadas
-                foreach (var venta in producto.Venta)
+                foreach (var venta in context.Ventas)
                 {
-                    context.Venta.Remove(venta);
+                    context.Ventas.Remove(venta);
                 }
 
                 // Eliminar el producto

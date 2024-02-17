@@ -20,7 +20,7 @@ namespace WebApi.database
         public virtual DbSet<Producto> Productos { get; set; } = null!;
         public virtual DbSet<ProductosVendido> ProductosVendidos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
-        public virtual DbSet<Ventum> Venta { get; set; } = null!;
+        public virtual DbSet<Venta> Ventas { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,7 +33,7 @@ namespace WebApi.database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ventum>(entity =>
+            modelBuilder.Entity<Venta>(entity =>
             {
                 entity.HasNoKey();
 

@@ -1,20 +1,21 @@
-﻿using Proyecto_CoderHouse.DataBase;
-using Proyecto_CoderHouse.Models;
+﻿using WebApi.database;
+using WebApi.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Proyecto_CoderHouse.Service
 {
     internal class VentaService
     {
-        internal static List<Venta> ListaVenta()
+        public List<Venta> ListaVenta()
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
-                List<Venta> ventas = context.Venta.ToList();
+                List<Venta> ventas = context.Ventas.ToList();
 
                 return ventas;
             }
@@ -22,19 +23,19 @@ namespace Proyecto_CoderHouse.Service
 
         internal static Venta ObtenerVentaPorId(int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
 
-                Venta? ventas = context.Venta.Where(p => p._Id == id).FirstOrDefault();
+                Venta? ventas = context.Ventas.Where(p => p.Id == id).FirstOrDefault();
                 return ventas;
             }
         }
 
         internal static bool AgregarVenta(Venta ventas)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
-                context.Venta.Add(ventas);
+                context.Ventas.Add(ventas);
 
                 context.SaveChanges();
 
@@ -44,14 +45,14 @@ namespace Proyecto_CoderHouse.Service
 
         internal static bool ActualizarVentaPorId(Venta ventas, int id)
         {
-            using (databasecontext context = new databasecontext())
+            using (coderhouse context = new coderhouse())
             {
-                Venta? v = context.Venta.Where(p => p._Id == id).FirstOrDefault();
+                Venta? v = context.Ventas.Where(p => p.Id == id).FirstOrDefault();
 
                 ventas.Comentarios = ventas.Comentarios;
                 ventas.IdUsuario = ventas.IdUsuario;
 
-                context.Venta.Update(v);
+                context.Ventas.Update(v);
 
                 context.SaveChanges();
                 return true;
@@ -60,10 +61,10 @@ namespace Proyecto_CoderHouse.Service
 
         internal static void EliminarVenta(int id)
         {
-            using (var context = new databasecontext())
+            using (var context = new coderhouse())
             {
 
-                var ventas = context.Venta.Find(id);
+                var ventas = context.Ventas.Find(id);
 
                 if (ventas == null)
                 {
@@ -71,11 +72,12 @@ namespace Proyecto_CoderHouse.Service
                     return;
                 }
 
-                context.Venta.Remove(ventas);
+                context.Ventas.Remove(ventas);
 
                 context.SaveChanges();
             }
         }
+        
 
     }
 }
