@@ -21,7 +21,6 @@ namespace Proyecto_CoderHouse.Service
 
                 return productos;
             }
-
         }
 
         internal static Producto ObtenerProductoPorId(int id)
@@ -45,11 +44,8 @@ namespace Proyecto_CoderHouse.Service
                 context.SaveChanges();
 
                 return true;
-            }
-                 
+            }    
         }
-
-
 
         internal static bool ActualizarProductoPorId(Producto producto, int id)
         {

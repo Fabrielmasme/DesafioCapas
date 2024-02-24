@@ -16,12 +16,12 @@ namespace Proyecto_CoderHouse.Service
 
         }
 
-        internal static Usuario ObtenerUsuarioPorId(int id)
+        internal static Usuario ObtenerUsuarioPorNombreUsuario(string nombreUsuario)
         {
             using (coderhouse context = new coderhouse())
             {
 
-               Usuario? usuarioBuscado = context.Usuarios.Where(u=> u.Id==id).FirstOrDefault();
+                Usuario? usuarioBuscado = context.Usuarios.Where(u => u.NombreUsuario == nombreUsuario).FirstOrDefault();
                 return usuarioBuscado;
             }
         }
@@ -38,12 +38,12 @@ namespace Proyecto_CoderHouse.Service
             }
         }
 
-        internal static bool ActualizarUsuarioPorId (Usuario usuario, int id)
+        internal static bool ActualizarUsuario(Usuario usuario)
         {
             using (coderhouse context = new coderhouse())
             {
-                Usuario? usuarioBuscado = context.Usuarios.Where(u => u.Id == id).FirstOrDefault();
-                usuarioBuscado.Nombre= usuario.Nombre;
+                Usuario? usuarioBuscado = context.Usuarios.Where(u => u.Id == usuario.Id).FirstOrDefault();
+                usuarioBuscado.Nombre = usuario.Nombre;
                 usuarioBuscado.NombreUsuario = usuario.NombreUsuario;
                 usuarioBuscado.Apellido = usuario.Apellido;
                 usuarioBuscado.Mail = usuario.Mail;

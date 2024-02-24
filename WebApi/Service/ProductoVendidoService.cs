@@ -1,81 +1,63 @@
 ﻿using WebApi.database;
 using WebApi.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Proyecto_CoderHouse.Service
+public class ProductoVendidoService
 {
-    internal class ProductoVendidoService
+    private readonly coderhouse _context;
+
+    public ProductoVendidoService(coderhouse context)
     {
-        internal static List<ProductosVendido> ListaProductosVendidos()
-        {
-            using (coderhouse context = new coderhouse())
-            {
-                List<ProductosVendido> productosVendidos = context.ProductosVendidos.ToList();
+        this._context = context;
+    }
 
-                return productosVendidos;
-            }
+    public List<ProductosVendido> ObtenerProductosVendidos()
+    {
+        return _context.ProductosVendidos.ToList();
+    }
+
+    public ProductosVendido ObtenerProductoVendidoPorId(int id)
+    {
+        return _context.ProductosVendidos.Where(p => p.Id == id).FirstOrDefault();
+    }
+
+    public bool AgregarProductoVendido(ProductosVendido productoVendido)
+    {
+        _context.ProductosVendidos.Add(productoVendido);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool ActualizarProductoVendido(ProductosVendido productoVendido, int id)
+    {
+        var productoVendidoEncontrado = _context.ProductosVendidos.Where(p => p.Id == id).FirstOrDefault();
+
+        if (productoVendidoEncontrado == null)
+        {
+            return false;
         }
 
-        internal static ProductosVendido ObtenerProductoVendidoPorId(int id)
+        productoVendidoEncontrado.IdProducto = productoVendido.IdProducto;
+        productoVendidoEncontrado.IdVenta = productoVendido.IdVenta;
+        productoVendidoEncontrado.Stock = productoVendido.Stock;
+
+        _context.ProductosVendidos.Update(productoVendidoEncontrado);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public void EliminarProductoVendido(int id)
+    {
+        var productoVendido = _context.ProductosVendidos.Find(id);
+
+        if (productoVendido != null)
         {
-            using (coderhouse context = new coderhouse())
-            {
-
-                ProductosVendido? productoVendido = context.ProductosVendidos.Where(p => p.Id == id).FirstOrDefault();
-                return productoVendido;
-            }
+            _context.ProductosVendidos.Remove(productoVendido);
+            _context.SaveChanges();
         }
+    }
 
-        internal static bool AgregarProductoVendido(ProductosVendido productoVendidos)
-        {
-            using (coderhouse context = new coderhouse())
-            {
-                context.ProductosVendidos.Add(productoVendidos);
-
-                context.SaveChanges();
-
-                return true;
-            }
-        }
-
-        internal static bool ActualizarProductoVendidoPorId(ProductosVendido productoVendidos, int id)
-        {
-            using (coderhouse context = new coderhouse())
-            {
-                ProductosVendido? productoVendido = context.ProductosVendidos.Where(p => p.Id == id).FirstOrDefault();
-
-                productoVendido.IdProducto =productoVendido.IdProducto;
-                productoVendido.IdVenta = productoVendido.IdVenta;
-                productoVendido.Stock = productoVendido.Stock;
-
-                context.ProductosVendidos.Update(productoVendido);
-
-                context.SaveChanges();
-                return true;
-            }
-        }
-
-        internal static void EliminarProductoVendido(int id)
-        {
-            using (var context = new coderhouse())
-            {
-
-                var productoVendido = context.ProductosVendidos.Find(id);
-
-                if (productoVendido == null)
-                {
-                    return;
-                }
-
-                context.ProductosVendidos.Remove(productoVendido);
-
-                context.SaveChanges();
-            }
-        }
-
+    public List<ProductosVendido> ObtenerProductosVendidosPorUsuario(int idUsuario)
+    {
+        return _context.ProductosVendidos.Where(pv => pv.IdProducto.HasValue && pv.Producto.IdUsuario == idUsuario).ToList();
     }
 }

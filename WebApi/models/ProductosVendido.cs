@@ -9,5 +9,7 @@ namespace WebApi.models
         public int? IdProducto { get; set; }
         public int? Stock { get; set; }
         public int? IdVenta { get; set; }
+
+        public virtual Producto Producto { get; set; }
     }
 }

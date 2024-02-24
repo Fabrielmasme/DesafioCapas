@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto_CoderHouse.Service
 {
-    internal class VentaService
+    public class VentaService
     {
         public List<Venta> ListaVenta()
         {
