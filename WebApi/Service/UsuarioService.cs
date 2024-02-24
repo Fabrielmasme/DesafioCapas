@@ -3,9 +3,9 @@ using WebApi.models;
 
 namespace Proyecto_CoderHouse.Service
 {
-    public static class UsuarioService
+    public class UsuarioService
     {
-        internal static List<Usuario> ObtenerTodosLosUsuarios()
+        public List<Usuario> ObtenerTodosLosUsuarios()
         {
             using (coderhouse context = new coderhouse())
             {

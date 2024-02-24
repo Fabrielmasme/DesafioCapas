@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebApi.models
+﻿namespace WebApi.DTOs
 {
-    public partial class Producto
+    public class ProductoDTO
     {
         public int Id { get; set; }
         public string Descripcion { get; set; } = null!;
@@ -11,8 +8,5 @@ namespace WebApi.models
         public double PrecioVenta { get; set; }
         public int Stock { get; set; }
         public int IdUsuario { get; set; }
-
-        public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
-        public virtual ICollection<ProductosVendido> ProductosVendidos { get; set; }
     }
 }

@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Proyecto_CoderHouse.Service;
+using WebApi.database;
+
 namespace WebApi
 {
     public class Program
@@ -8,10 +12,22 @@ namespace WebApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddControllers();// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            builder.Services.AddScoped<UsuarioService>();
+            builder.Services.AddScoped<ProductoService>();
+            builder.Services.AddScoped<ProductoVendidoService>();
+            builder.Services.AddScoped<VentaService>();
+
+
+            builder.Services.AddDbContext<coderhouse>(options =>
+            {
+                options.UseSqlServer(connectionString:"Server=.; Database=coderhouse; Trusted_Connection=True;");
+            });
+
 
             var app = builder.Build();
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebApi.models
+﻿namespace WebApi.DTOs
 {
-    public class Venta
+    public class VentasDTO
     {
         public int? Id { get; set; }
         public string? Comentarios { get; set; }
